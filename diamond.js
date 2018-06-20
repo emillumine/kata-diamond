@@ -24,7 +24,51 @@ function genereDiamant(lettre){
 
 	}
 
+	if (lettre == 'D') {
+		diamant[0] = generePremiereLigneDiamant(lettre);
+		diamant[1] = genereDeuxiemeLigneDiamant(lettre);
+	}
+
 	return diamant;
 }
 
-module.exports = genereDiamant;
+function generePremiereLigneDiamant(lettre){
+	var ligne = "";
+
+	ligne = " ".repeat(convertitLettreEnChiffre(lettre)) + "A" + " ".repeat(convertitLettreEnChiffre(lettre));
+
+	return ligne;
+}
+
+function genereDeuxiemeLigneDiamant(lettre){
+	var ligne = "";
+
+	ligne = " ".repeat(convertitLettreEnChiffre(lettre) - 1) + "B B" + " ".repeat(convertitLettreEnChiffre(lettre) - 1);
+
+	return ligne;
+}
+
+function genereLigneDiamant(lettre, index_ligne){
+	var ligne = "";
+
+	ligne = " ".repeat(convertitLettreEnChiffre(lettre) - index_ligne) + "lettre de la ligne répétée le bon nombre de fois" + " ".repeat(convertitLettreEnChiffre(lettre) - index_ligne);
+
+	return ligne;
+}
+
+function convertitLettreEnChiffre(lettre){
+	var dictionnaireLettreChiffre = new Map();
+
+	dictionnaireLettreChiffre.set("A", 0);
+	dictionnaireLettreChiffre.set("B", 1);
+	dictionnaireLettreChiffre.set("C", 2);
+	dictionnaireLettreChiffre.set("D", 3);
+
+	return dictionnaireLettreChiffre.get(lettre);
+}
+
+
+module.exports = {
+	genereDiamant,
+	genereLigneDiamant
+}

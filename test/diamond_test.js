@@ -1,10 +1,11 @@
 var assert = require('assert');
-var genereDiamant = require('../diamond.js');
+var genereDiamant = require('../diamond.js').genereDiamant;
+var genereLigneDiamant = require('../diamond.js').genereLigneDiamant;
 
 
 describe('diamond', function() {
 
-  it('affiche le diamant de A', function() {
+  it('genere le diamant de A', function() {
   	var lettre = 'A';
   	var diamant_attendu = ["A"];
 
@@ -13,7 +14,7 @@ describe('diamond', function() {
     assert.equal(diamant_attendu[0], resultat[0]);
   });
 
-  it('affiche le diamant de B', function() {
+  it('genere le diamant de B', function() {
   	var lettre = 'B';
   	var diamant_attendu = [" A ","B B"," A "];
 
@@ -24,7 +25,7 @@ describe('diamond', function() {
   	}
   });
 
-  it('affiche le diamant de C', function() {
+  it('genere le diamant de C', function() {
 		var lettre = 'C';
 		var diamant_attendu = ["  A  "," B B ","C C C"," B B ","  A  "];
 
@@ -39,6 +40,37 @@ describe('diamond', function() {
 		}
 	});
 
+  it('remplit la première ligne du diamant de D dans le diamant de D', function() {
+    var lettre = 'D';
+    var diamant_attendu = ["   A   ", "  B B  ", " C C C ", "D D D D", " C C C ", "  B B  ", "   A   "];
+    var ligne_attendue = "   A   ";
 
+    var resultat = genereDiamant(lettre);
+
+    for (var i = 0; i < diamant_attendu.length; i++) {
+      console.log(diamant_attendu[i]);
+    }
+
+    assert.equal(ligne_attendue, resultat[0]);
+  });
+
+  it('remplit la deuxième ligne du diamant de D dans le diamant de D', function() {
+    var lettre = 'D';
+    var ligne_attendue = "  B B  ";
+
+    var resultat = genereDiamant(lettre);
+
+    assert.equal(ligne_attendue, resultat[1]);
+  });
+
+  it('genere la deuxième ligne du diamant de D', function () {
+    var lettre = 'D';
+    var index_ligne = 1;
+    var ligne_attendue = "  B B  ";
+
+    var resultat = genereLigneDiamant(lettre, index_ligne);
+
+    assert.equal(ligne_attendue, resultat)
+  });
 
  });

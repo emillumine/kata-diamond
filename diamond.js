@@ -1,74 +1,63 @@
 function genereDiamant(lettre){
 	var diamant = [];
 
-	if (lettre == 'A') {
-		diamant[0] = 'A'
-
+	for (var i = 0; i <= convertitLettreEnChiffre(lettre); i++) {
+		diamant[i] = genereLigneDiamant(lettre, i);
 	}
 
-	if (lettre == 'B') {
-
-		diamant[0] = " A ";
-		diamant[1] = "B B";
-		diamant[2] = " A ";
-
-	}
-
-	if (lettre == 'C') {
-
-		diamant[0] = " ".repeat(2) + "A" + " ".repeat(2);
-		diamant[1] = " ".repeat(1) + "B B" + " ".repeat(1);
-		diamant[2] = "C C C";
-		diamant[3] = " B B ";
-		diamant[4] = "  A  ";
-
-	}
-
-	if (lettre == 'D') {
-		diamant[0] = generePremiereLigneDiamant(lettre);
-		diamant[1] = genereDeuxiemeLigneDiamant(lettre);
+	for (var i = 1 ; i <= convertitLettreEnChiffre(lettre); i++) {
+		diamant[convertitLettreEnChiffre(lettre) + i] = diamant[convertitLettreEnChiffre(lettre) - i]
 	}
 
 	return diamant;
 }
 
-function generePremiereLigneDiamant(lettre){
-	var ligne = "";
-
-	ligne = " ".repeat(convertitLettreEnChiffre(lettre)) + "A" + " ".repeat(convertitLettreEnChiffre(lettre));
-
-	return ligne;
-}
-
-function genereDeuxiemeLigneDiamant(lettre){
-	var ligne = "";
-
-	ligne = " ".repeat(convertitLettreEnChiffre(lettre) - 1) + "B B" + " ".repeat(convertitLettreEnChiffre(lettre) - 1);
-
-	return ligne;
-}
-
 function genereLigneDiamant(lettre, index_ligne){
 	var ligne = "";
 
-	ligne = " ".repeat(convertitLettreEnChiffre(lettre) - index_ligne) + "lettre de la ligne répétée le bon nombre de fois" + " ".repeat(convertitLettreEnChiffre(lettre) - index_ligne);
+	ligne = indenteLigne(lettre, index_ligne);
+	ligne += genereCorpsLigne(index_ligne);
+	ligne += indenteLigne(lettre, index_ligne);
 
 	return ligne;
 }
 
+function indenteLigne(lettre, index_ligne){
+	var index_lettre = convertitLettreEnChiffre(lettre);
+
+	return " ".repeat(index_lettre - index_ligne);
+}
+
+function genereCorpsLigne(index_ligne){
+	var lettre = convertitChiffreEnLettre(index_ligne);
+	var corps_ligne = lettre;
+
+	for (var i= 1; i <= index_ligne; i++) {
+		corps_ligne += " " + lettre;
+	} 
+
+	return corps_ligne;
+}
+
 function convertitLettreEnChiffre(lettre){
-	var dictionnaireLettreChiffre = new Map();
+	return lettre.charCodeAt(0)-65;
+}
 
-	dictionnaireLettreChiffre.set("A", 0);
-	dictionnaireLettreChiffre.set("B", 1);
-	dictionnaireLettreChiffre.set("C", 2);
-	dictionnaireLettreChiffre.set("D", 3);
+function convertitChiffreEnLettre(chiffre){
+	return String.fromCharCode(chiffre + 65)
+}
 
-	return dictionnaireLettreChiffre.get(lettre);
+function afficheDiamant(lettre){
+	var diamant = genereDiamant(lettre);
+
+	for (var i = 0; i < diamant.length; i++) {
+    console.log(diamant[i]);
+  }
 }
 
 
 module.exports = {
 	genereDiamant,
-	genereLigneDiamant
+	genereLigneDiamant,
+	afficheDiamant
 }
